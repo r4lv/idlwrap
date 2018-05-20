@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>idlwrap API</title>
+<link rel="stylesheet" href="static/style.css">
+<script src="https://cdn.jsdelivr.net/npm/cash-dom@1.3.5/dist/cash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+
+
+</head>
+<body class="off-canvas off-canvas-sidebar-show">
+
+    <a class="off-canvas-toggle btn btn-primary btn-action" href="#sidebar">
+        <i class="icon icon-menu"></i>
+    </a>
+
+    <div id="sidebar" class="off-canvas-sidebar">
+        <div id="sidebar-title">
+            <h2>idlwrap</h2>
+        </div>
+
+        <div id="sidebar-toc">
+            
+            <ul class="menu menu-nav nav" id="menu-pre">
+            <li class="nav-item"><a href="index.html">idlwrap</a></li><li class="nav-item"><a href="Porting IDL to Python.html">Porting IDL to Python</a></li>
+            </ul>
+            
+            <ul class="menu menu-nav nav" id="menu-main">
+            <li class="nav-item indent-1"><a href="#main-title"><span class="name">idlwrap</span> API</a></li><li class="nav-item indent-2"><a href="#header-functions">Functions</a></li><li class="nav-item indent-3"><a href="#idlwrap.findgen">findgen</a></li><li class="nav-item indent-3"><a href="#idlwrap.indgen">indgen</a></li><li class="nav-item indent-3"><a href="#idlwrap.dindgen">dindgen</a></li><li class="nav-item indent-3"><a href="#idlwrap.fltarr">fltarr</a></li><li class="nav-item indent-3"><a href="#idlwrap.intarr">intarr</a></li><li class="nav-item indent-3"><a href="#idlwrap.dblarr">dblarr</a></li><li class="nav-item indent-3"><a href="#idlwrap.shift">shift</a></li><li class="nav-item indent-3"><a href="#idlwrap.where">where</a></li><li class="nav-item indent-3"><a href="#idlwrap.size">size</a></li><li class="nav-item indent-3"><a href="#idlwrap.median">median</a></li><li class="nav-item indent-3"><a href="#idlwrap.mean">mean</a></li><li class="nav-item indent-3"><a href="#idlwrap.total">total</a></li><li class="nav-item indent-3"><a href="#idlwrap.finite">finite</a></li><li class="nav-item indent-3"><a href="#idlwrap.fft">fft</a></li><li class="nav-item indent-3"><a href="#idlwrap.randomn">randomn</a></li><li class="nav-item indent-3"><a href="#idlwrap.abs">abs</a></li><li class="nav-item indent-3"><a href="#idlwrap.round">round</a></li><li class="nav-item indent-3"><a href="#idlwrap.floor">floor</a></li><li class="nav-item indent-3"><a href="#idlwrap.ceil">ceil</a></li><li class="nav-item indent-3"><a href="#idlwrap.fix">fix</a></li><li class="nav-item indent-3"><a href="#idlwrap.complex">complex</a></li><li class="nav-item indent-3"><a href="#idlwrap.dcomplex">dcomplex</a></li><li class="nav-item indent-3"><a href="#idlwrap.real_part">real_part</a></li><li class="nav-item indent-3"><a href="#idlwrap.imaginary">imaginary</a></li><li class="nav-item indent-3"><a href="#idlwrap.conj">conj</a></li><li class="nav-item indent-3"><a href="#idlwrap.acos">acos</a></li><li class="nav-item indent-3"><a href="#idlwrap.asin">asin</a></li><li class="nav-item indent-3"><a href="#idlwrap.atan">atan</a></li><li class="nav-item indent-3"><a href="#idlwrap.alog">alog</a></li><li class="nav-item indent-3"><a href="#idlwrap.alog2">alog2</a></li><li class="nav-item indent-3"><a href="#idlwrap.alog10">alog10</a></li><li class="nav-item indent-3"><a href="#idlwrap.beta">beta</a></li><li class="nav-item indent-3"><a href="#idlwrap.ibeta">ibeta</a></li><li class="nav-item indent-3"><a href="#idlwrap.beselj">beselj</a></li><li class="nav-item indent-3"><a href="#idlwrap.keyword_set">keyword_set</a></li><li class="nav-item indent-3"><a href="#idlwrap.range_">range_</a></li><li class="nav-item indent-3"><a href="#idlwrap.range_int_">range_int_</a></li><li class="nav-item indent-3"><a href="#idlwrap.subsetify_">subsetify_</a></li><li class="nav-item indent-3"><a href="#idlwrap.subset_">subset_</a></li><li class="nav-item indent-3"><a href="#idlwrap.set_subset_">set_subset_</a></li><li class="nav-item indent-3"><a href="#idlwrap.matrix_multiply_">matrix_multiply_</a></li><li class="nav-item indent-3"><a href="#idlwrap.H">H</a></li><li class="nav-item indent-3"><a href="#idlwrap.HH">HH</a></li><li class="nav-item indent-3"><a href="#idlwrap.LE">LE</a></li><li class="nav-item indent-3"><a href="#idlwrap.GE">GE</a></li><li class="nav-item indent-3"><a href="#idlwrap.LT">LT</a></li><li class="nav-item indent-3"><a href="#idlwrap.GT">GT</a></li><li class="nav-item indent-3"><a href="#idlwrap.EQ">EQ</a></li><li class="nav-item indent-3"><a href="#idlwrap.NE">NE</a></li><li class="nav-item indent-3"><a href="#idlwrap.operator_">operator_</a></li>
+            </ul>
+            
+
+        </div>
+    </div>
+
+    <a class="off-canvas-overlay" href="#close"></a>
+
+    <div class="off-canvas-content" id="content">
+        <div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt"></div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<article class="api-flette">
+      
+  
+
+  
+
+
+  <header id="section-intro">
+  <h1 class="title" id="main-title"><span class="name">idlwrap</span> API</h1><p><em>idlwrap</em> helps you port IDL code to python by providing an IDL-like interface to <code>numpy</code> and <code>scipy</code>.</p>
+<blockquote>
+You do not need IDL to use <em>idlwrap</em>!</blockquote>
+<div class="section" id="usage">
+<h5>usage</h5>
+<p>An <strong>IDL function or procedure</strong> corresponds to a lowercased function in idlwrap:</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">FINDGEN</span>   <span class="o">-&gt;</span>  idlwrap.<span class="nb">findgen</span>
+<span class="nb">POLY_FIT</span>  <span class="o">-&gt;</span>  idlwrap.<span class="nb">poly_fit</span>
+</pre></div>
+<p>All <em>idlwrap</em>-specific functions end with an underscore. They have no directly corresponding IDL
+functions, they rather map special <strong>IDL syntax</strong>:</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span>A <span class="o">#</span> B
+    <span class="o">-&gt;</span>  idlwrap.operator_(A, <span class="s2">"#"</span>, B)
+
+A[<span class="mi">1</span><span class="o">:</span><span class="mi">4</span>,<span class="o">*</span>] <span class="o">=</span> <span class="mi">4</span>
+    <span class="o">-&gt;</span>  idlwrap.set_subset_(A, <span class="s2">"[1:4,*]"</span>, <span class="mi">4</span>)
+
+<span class="k">FOR</span> I<span class="o">=</span><span class="mi">0</span>, <span class="mi">32000</span> <span class="k">DO</span> J <span class="o">=</span> I
+    <span class="o">-&gt;</span>  <span class="k">for</span> i in idlwrap.range_(<span class="mi">0</span>, <span class="mi">32000</span>)<span class="o">:</span> j <span class="o">=</span> i
+</pre></div>
+</div>
+<div class="section" id="arrays">
+<h5>arrays</h5>
+<p>In python, array indices work differently from IDL. When you are used to IDL's array subscripts,
+<em>idlwrap</em>'s <code>subsetify_</code> function can be interesting for you.</p>
+</div>
+
+  
+
+  </header>
+
+  <section id="section-items">
+
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.findgen" data-toc="findgen">
+    <span class="ident">findgen</span>(*args)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Create a (multi-dimensional) range of float values.</p>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>Note that the shape of the output array is <em>reversed</em> compared to the
+arguments passed (e.g. <code>indgen(2,3,4)</code> → shape 4,3,2). For 3D cubes, the
+<em>last</em> argument to indgen is the number of frames, but the frame can be
+accessed directly with <code>result[n]</code> (first subset parameter.)</p>
+<p>The keywords INCREMENT and START are not implemented.</p>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">FINDGEN</span>(n)    <span class="o">-&gt;</span>  np.arange(n)
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.indgen" data-toc="indgen">
+    <span class="ident">indgen</span>(*shape)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Create a (multi-dimensional) range of integer values.</p>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><strong>porting to python</strong></p>
+<p>If <code>shape</code> is of one dimension only, you can use <code>np.arange(n)</code>.
+IDL accepts floats as dimension parameters, but applies <code>int()</code> before
+using them. While <code>np.arange()</code> also accepts floats, be careful, as the
+number of elements do not match any more!</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">INDGEN</span>(<span class="mf">5.2</span>)         <span class="o">-&gt;</span> [<span class="mi">0</span>,<span class="mi">1</span>,<span class="mi">2</span>,<span class="mi">3</span>,<span class="mi">4</span>]
+<span class="nb">INDGEN</span>(<span class="mi">5</span>)           <span class="o">-&gt;</span> [<span class="mi">0</span>,<span class="mi">1</span>,<span class="mi">2</span>,<span class="mi">3</span>,<span class="mi">4</span>]
+np.arange(<span class="mf">5.2</span>)      <span class="o">-&gt;</span> [<span class="mi">0</span>,<span class="mi">1</span>,<span class="mi">2</span>,<span class="mi">3</span>,<span class="mi">4</span>,<span class="mi">5</span>] ; !!
+np.arange(int(<span class="mf">5.2</span>)) <span class="o">-&gt;</span> [<span class="mi">0</span>,<span class="mi">1</span>,<span class="mi">2</span>,<span class="mi">3</span>,<span class="mi">4</span>]
+np.arange(<span class="mi">5</span>)        <span class="o">-&gt;</span> [<span class="mi">0</span>,<span class="mi">1</span>,<span class="mi">2</span>,<span class="mi">3</span>,<span class="mi">4</span>]
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.dindgen" data-toc="dindgen">
+    <span class="ident">dindgen</span>(*shape)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Create a (multi-dimensional) range of double-precision float values.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.fltarr" data-toc="fltarr">
+    <span class="ident">fltarr</span>(*shape)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Create a float array filled with zeros.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>*shape <span class="classifier-delimiter">:</span> <span class="classifier">(multiple) ints, NOT a list</span></dt>
+<dd>the dimensions of the new array</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">np.dtype, optional</span></dt>
+<dd>dtype object describing the tpe and precision of the values in the new
+array. numpy's default is <code>float / np.float32</code></dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<ul class="simple">
+<li>the flag /nozero was omitted.</li>
+</ul>
+<p><strong>Porting to python</strong></p>
+<p>The core numpy function is <code>np.zeros</code>. Pay attention when passing the
+value <code>1</code> to <code>FLTARR</code> (and its sister functions <code>INTARR</code> and
+<code>DBLARR</code>), as the resulting shape is slightly different: IDL ignores any
+final <code><span class="pre">1``s,</span> so for IDL calling ``FLTARR(5, 1, 1, <span class="pre">...)</span></code> is the same as
+<code>FLTARR(5)</code>.</p>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">FLTARR</span>(n)          <span class="o">-&gt;</span> np.zeros(n)
+<span class="nb">FLTARR</span>(a, b)       <span class="o">-&gt;</span> np.zeros((b, a))
+<span class="nb">FLTARR</span>(a, b, c)    <span class="o">-&gt;</span> np.zeros((c, b, a))
+<span class="nb">FLTARR</span>(a, b, <span class="mi">1</span>, <span class="mi">1</span>) <span class="o">-&gt;</span> np.zeros((b, a))
+
+<span class="nb">FLTARR</span>(n)<span class="o">+</span><span class="mi">1</span>        <span class="o">-&gt;</span>  np.ones(n)
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.intarr" data-toc="intarr">
+    <span class="ident">intarr</span>(*shape)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Create an integer array filled with zeros.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.dblarr" data-toc="dblarr">
+    <span class="ident">dblarr</span>(*shape)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Create a double-precision float array filled with zeros.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.shift" data-toc="shift">
+    <span class="ident">shift</span>(arr, *args)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p><strong>WARNING</strong></p>
+<p>The <code>Si</code> arguments can be either a single array containing the shift
+parameters for each dimension, or a sequence of up to eight scalar shift
+values. For arrays of more than one dimension, the parameter <code>Sn</code> specifies
+the shift applied to the n-th dimension</p>
+<p>while this implementation supports lists as <code>arr</code> argument, to match the
+style of IDL, the IDLpy bridge does <em>not</em> support lists, and returns it
+<em>unchanged</em>!</p>
+<p>If <code>SHIFT</code> is used in combination with <code>FFT</code>, maybe you should look at
+<code>np.fft.fftshift</code>.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.where" data-toc="where">
+    <span class="ident">where</span>(array_expression)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>port of IDL's <code>WHERE</code> function.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>array_expression <span class="classifier-delimiter">:</span> <span class="classifier">ndarray / expression</span></dt>
+<dd>see examples.</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>res <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>List of 'good' indices. If no index was found, <code><span class="pre">[-1]</span></code> is returned.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>see also np.put(a, ind, v), which is roughly equivalent to <code><span class="pre">a.flat[ind]=v</span></code></p>
+<p><strong>porting to python</strong></p>
+<p>Most of the time, you will use WHERE for subsetting arrays. While this works
+only with indices in IDL (which are returned by WHERE), it work with both
+indices (<code>idlwrap.where</code>) and boolean masks (as returned by comparison
+operators like <code>array_a &lt; array_b</code>). You can usually remove
+<code>idlwrap.where</code> entirely.</p>
+<p>with 2d arrays <code>a</code>, <code>b</code>:</p>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="n">WHERE</span><span class="p">(</span><span class="n">a</span> <span class="n">LT</span> <span class="n">b</span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">idlwrap</span><span class="o">.</span><span class="n">operator_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"LT"</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="o">-&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">idlwrap</span><span class="o">.</span><span class="n">LT</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="o">-&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
+<span class="c1"># ... in fact, it could even be replaced directly by ``a &lt; b`` (which</span>
+<span class="c1"># returns a boolean array in np), if WHERE is used as array index!</span>
+</pre></div>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span>array <span class="o">=</span> <span class="nb">FINDGEN</span>(<span class="mi">100</span>)
+B <span class="o">=</span> <span class="nb">WHERE</span>(array <span class="k">GT</span> <span class="mi">20</span>)
+values <span class="o">=</span> array[B]
+</pre></div>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">findgen</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">idlwrap</span><span class="o">.</span><span class="n">GT</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="c1"># equivalent to `idlwrap.where(a &gt; 20)`</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+
+<span class="c1"># or even:</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">array</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.size" data-toc="size">
+    <span class="ident">size</span>(arr)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Size and type information for arrays.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>arr <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>ndim <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of dimensions.</dd>
+<dt>*shape <span class="classifier-delimiter">:</span> <span class="classifier">ints</span></dt>
+<dd>First, second, ... dimension.</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">int or np.dtype</span></dt>
+<dd>Type of the array, as defined in the <a class="reference external" href="https://www.harrisgeospatial.com/docs/size.html">IDL Type Codes and Names</a>, or as <code>np.dtype</code> object.</dd>
+<dt>size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of elements.</dd>
+</dl>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.median" data-toc="median">
+    <span class="ident">median</span>(array, width=None, even=False)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>array <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>The array to be processed. Array can have only one or two dimensions.
+If Width is not given, Array can have any valid number of dimensions.</dd>
+<dt>width <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>The size of the one or two-dimensional neighborhood to be used for the
+median filter. The neighborhood has the same number of dimensions as
+array.</dd>
+<dt>even <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd>If the EVEN keyword is set when Array contains an even number of points
+(i.e. there is no middle number), MEDIAN returns the average of the two
+middle numbers. The returned value may not be an element of Array . If
+Array contains an odd number of points, MEDIAN returns the median value.
+The returned value will always be an element of Array --even if the EVEN
+keyword is set--since an odd number of points will always have a single
+middle value.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><strong>porting to python</strong></p>
+<p>As long as <code>/EVEN</code> is passed to <code>MEDIAN</code>, and no <code>WIDTH</code> is present,
+it can safely be replaced with <code>np.median()</code>.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.mean" data-toc="mean">
+    <span class="ident">mean</span>(x)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>The keyword parameters DIMENSION, DOUBLE and NAN are not implemented.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.total" data-toc="total">
+    <span class="ident">total</span>(array, dimension=None, integer=False)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>array <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><!--  -->
+</dd>
+<dt>dimension <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><!--  -->
+</dd>
+<dt>integer <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>To force ndim &gt;= 1:</p>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">res</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+<p><strong>Implementation differences</strong></p>
+<p>not implemented: /CUMULATIVE, /DOUBLE, /NAN, /PRESERVE_TYPE</p>
+<p><strong>porting to python</strong></p>
+<p><cite>TOTAL</cite> corresponds to <cite>ndarray.sum()</cite>. The parameters /DOUBLE and /INTEGER
+can be replicated through the <cite>dtype=...</cite> parameter. DIMENSION needs more
+attention, as the dimensions are reversed. If no DIMENSION is passed, just
+use <cite>np.sum()</cite>.</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">TOTAL</span>(array)  <span class="o">-&gt;</span>  np.sum(array)
+</pre></div>
+<p><strong>todo</strong>
+Does IDL support a list as DIMENSION? What happens?</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.finite" data-toc="finite">
+    <span class="ident">finite</span>(x, infinity=False, nan=False, sign=0)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Identifies whether or not a given argument is finite.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>A floating-point, double-precision, or complex scalar or array
+expression. Strings are first converted to floating-point. ????</dd>
+<dt>infinity <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><!--  -->
+</dd>
+<dt>nan <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><!--  -->
+</dd>
+<dt>sign <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd>Only 0, the default behaviour, is implemented.</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>is_finite <span class="classifier-delimiter">:</span> <span class="classifier">bool / bool np.ndarray</span></dt>
+<dd>If the result is finite.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><code>SIGN</code> is not implemented. One difficulty arrises from the fact that IDL
+distinguishes between <code><span class="pre">-!VALUES.F_NAN</span></code> and <code>!VALUES.F_NAN</code>. In python,
+there is no possibility to distinguish a negative from a positive
+<code>np.nan</code>:</p>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="n">a</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># -&gt; False</span>
+<span class="n">b</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># -&gt; False</span>
+
+<span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span>   <span class="c1"># -&gt; False</span>
+<span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span>   <span class="c1"># -&gt; False</span>
+<span class="n">b</span> <span class="o">&lt;</span> <span class="mi">0</span>   <span class="c1"># -&gt; False</span>
+<span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span>   <span class="c1"># -&gt; False</span>
+</pre></div>
+<p><strong>porting to python</strong></p>
+<p>if <code>SIGN</code> is not set:</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">FINITE</span>(..., <span class="o">/</span>NAN) <span class="o">-&gt;</span> np.isnan(...)
+<span class="nb">FINITE</span>(..., <span class="o">/</span>INF) <span class="o">-&gt;</span> np.isinf(...)
+<span class="nb">FINITE</span>(...)       <span class="o">-&gt;</span> np.isfinite(...)
+</pre></div>
+<p>if <code>SIGN</code> is set:</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span>???
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.fft" data-toc="fft">
+    <span class="ident">fft</span>(array, direction=-1, inverse=False)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>array <span class="classifier-delimiter">:</span> <span class="classifier">2d (?????) np.ndarray</span></dt>
+<dd><!--  -->
+</dd>
+<dt>direction <span class="classifier-delimiter">:</span> <span class="classifier">integer, optional</span></dt>
+<dd>Scalar indicating the direction fo the transform, which is negative by
+convention for the forward transform, and positive for the inverse
+transform. The value of direction is ignored if the inverse keyword is
+set.</dd>
+<dt>inverse <span class="classifier-delimiter">:</span> <span class="classifier">boolean, optional</span></dt>
+<dd>Set this keyword to perform an inverse transform. Setting this keyword
+is equivalent to setting the <code>direction</code> argument to a positive value.
+Note, however, that setting <code>inverse</code> results in an inverse transform
+even if <code>direction</code> is specified as negative.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>A normalization factor of 1/N, where N is the number of points, is applied
+during the forward transform.</p>
+<p><strong>Implementation details</strong></p>
+<p>The parameters <code>CENTER</code>, <code>DIMENSION</code>, <code>DOUBLE</code>, <code>OVERWRITE</code> and the thread pool
+keywords are not implemented.</p>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<p>if you do not care about the normalization:</p>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="nb">FFT</span>(image2d, <span class="mi">1</span>)  <span class="o">-&gt;</span> np.<span class="nb">fft</span>.ifft2(image2d)
+<span class="nb">FFT</span>(image2d, <span class="o">-</span><span class="mi">1</span>) <span class="o">-&gt;</span> np.<span class="nb">fft</span>.fft2(image2d)
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.randomn" data-toc="randomn">
+    <span class="ident">randomn</span>(seed=None, *shape)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Normal-distributed random numbers.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int or 1-d array_like</span></dt>
+<dd>seed for random generator.</dd>
+<dt>*shape <span class="classifier-delimiter">:</span> <span class="classifier">list of int</span></dt>
+<dd>dimension of the returned array</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><code>RANDOMN</code> uses the Box-Muller method, based off of the <code>gasdev</code>
+algorithm (section 7.2 Numerical Recipies in C, 1992) . The uniform random
+numbers required for the Box-Miller method are generated using the Mersenne
+Twister algorithm. [from the IDL documentation]</p>
+<p>Note that the random numbers generated by python differ from the ones from
+IDL, as the seed is handled differently and the algorithms differ too.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.abs" data-toc="abs">
+    <span class="ident">abs</span>(x)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>absolute value</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.round" data-toc="round">
+    <span class="ident">round</span>(x)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>round to the <em>nearest</em> integer (-&gt; int type).</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">float or array</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">np.int64 or int64-ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><code>ROUND</code> rounds to the <em>nearest</em> integer, unlike numpy's <code>np.round</code> / <code>np.rint</code>,
+which rounds to the nearest <em>even</em> value (defined in the standard IEEE 754)</p>
+<p><a class="reference external" href="https://stackoverflow.com/a/34219827/1943546">https://stackoverflow.com/a/34219827/1943546</a></p>
+<p><strong>porting to python</strong></p>
+<p>No direct match. Use this workaround.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.floor" data-toc="floor">
+    <span class="ident">floor</span>(x)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">float or array</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">np.int64 or int64-ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>The keyword L64 is not implemented.</p>
+<p><strong>porting to python</strong></p>
+<p>This is basically <code>np.floor</code>, but IDL returns integer types (e.g. used as
+array indices)</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.ceil" data-toc="ceil">
+    <span class="ident">ceil</span>(x)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Round upwards (towards infinity).</p>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">np.int64 or int64-ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.fix" data-toc="fix">
+    <span class="ident">fix</span>(expression)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Round to nearest integer towards zero.</p>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">np.int64 or int64-ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.complex" data-toc="complex">
+    <span class="ident">complex</span>(real, imaginary=0)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>creates complex number. Same as <code>idlwrap.dcomplex</code></p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>real <span class="classifier-delimiter">:</span> <span class="classifier">float or array or list</span></dt>
+<dd><!--  -->
+</dd>
+<dt>imaginary <span class="classifier-delimiter">:</span> <span class="classifier">float or array or list, optional</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.dcomplex" data-toc="dcomplex">
+    <span class="ident">dcomplex</span>(real, imaginary=0)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>double-precision complex number</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>real <span class="classifier-delimiter">:</span> <span class="classifier">float or array or list</span></dt>
+<dd>Real part.</dd>
+<dt>imaginary <span class="classifier-delimiter">:</span> <span class="classifier">float or array or list, optional</span></dt>
+<dd>Imaginary part. Defaults to 0.</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>complex_number <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>This always returns a numpy array. Beware of that if you call e.g.
+<code><span class="pre">idlwrap.complex(1,2).real</span></code>, which results in an 0-dimension np.ndarray.</p>
+<p>The second signature type, with <code>Expression, Offset, D1, D2, ...</code> is not
+supported.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.real_part" data-toc="real_part">
+    <span class="ident">real_part</span>(z)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">complex or ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>numpy <code>.real</code> works with complex numbers and <code>ndarray</code>.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.imaginary" data-toc="imaginary">
+    <span class="ident">imaginary</span>(complex_expression)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>imaginary part</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.conj" data-toc="conj">
+    <span class="ident">conj</span>(x)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>complex conjugate</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.acos" data-toc="acos">
+    <span class="ident">acos</span>(x)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.asin" data-toc="asin">
+    <span class="ident">asin</span>(x)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.atan" data-toc="atan">
+    <span class="ident">atan</span>(x)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.alog" data-toc="alog">
+    <span class="ident">alog</span>(x)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.alog2" data-toc="alog2">
+    <span class="ident">alog2</span>(x)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.alog10" data-toc="alog10">
+    <span class="ident">alog10</span>(x)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.beta" data-toc="beta">
+    <span class="ident">beta</span>(z, w)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.ibeta" data-toc="ibeta">
+    <span class="ident">ibeta</span>(a, b, z)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.beselj" data-toc="beselj">
+    <span class="ident">beselj</span>(x, n)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Returns the J Bessel function of order N for the argument X.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>x</dt>
+<dd>argument.
+A scalar or array specifying the values for which the Bessel function is
+required.
+IDL: Values for X must be in the range -108 to 108. If X is negative
+then N must be an integer (either positive or negative).</dd>
+<dt>n</dt>
+<dd>order.
+A scalar or array specifying the order of the Bessel function to
+calculate. Values for N can be integers or real numbers. If N is
+negative then it must be an integer.</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>my_return_parameter</dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>The output keyword <code>ITER</code>, which returns the number of iterations, was
+omitted. For J Bessel functions, scipy's <code>jn</code> is just an alias for <code>jv</code>
+(which is not the case for the other Bessel functions, e.g. yn and yv)</p>
+<p><strong>porting to python</strong></p>
+<p>Replace <code>BESELJ(x, n)</code> with <code>scipy.special.jv(n, x)</code>. Pay attention to
+the inversed order of the arguments.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.keyword_set" data-toc="keyword_set">
+    <span class="ident">keyword_set</span>(kw)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>only true if <code>kw</code> is defined AND different from zero.</p>
+<p>here, <code>None</code> is used for non-defined keyword.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.range_" data-toc="range_">
+    <span class="ident">range_</span>(init, limit, increment=1)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Behaves like IDL's <code>FOR i=init, limit DO statement</code>.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>init <span class="classifier-delimiter">:</span> <span class="classifier">int, float</span></dt>
+<dd><!--  -->
+</dd>
+<dt>limit <span class="classifier-delimiter">:</span> <span class="classifier">int, float</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>The endpoint <code>stop</code> is included (<code>&lt;=</code> comparison instead of python's
+<code>&lt;</code>). The <code>increment</code> is not implemented.</p>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span><span class="k">FOR</span> I<span class="o">=</span><span class="mi">0</span>, <span class="mi">32000</span> <span class="k">DO</span> J <span class="o">=</span> I
+    <span class="o">-&gt;</span>   <span class="k">for</span> i in range_(<span class="mi">0</span>, <span class="mi">3200</span>)<span class="o">:</span> j <span class="o">=</span> i
+
+<span class="k">FOR</span> K<span class="o">=</span><span class="mf">100.0</span>, <span class="mf">1.0</span>, <span class="o">-</span><span class="mi">1</span> <span class="k">DO</span> <span class="k">BEGIN</span>
+    <span class="nb">PRINT</span>, K
+<span class="k">ENDFOR</span>
+
+    <span class="o">-&gt;</span>   <span class="k">for</span> k in range_(<span class="mf">100.0</span>, <span class="mf">1.0</span>, <span class="o">-</span><span class="mi">1</span>)<span class="o">:</span>
+             <span class="nb">print</span>(k)
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.range_int_" data-toc="range_int_">
+    <span class="ident">range_int_</span>(*args)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Like <code>range_</code>, but returns integers which could then be used as list indices.</p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.subsetify_" data-toc="subsetify_">
+    <span class="ident">subsetify_</span>(arr)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Transforms a numpy ndarray to an object which implements IDLs array subsetting. This is a
+convenient alternative to the <code>subset_</code> and <code>set_subset_</code> functions.</p>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>arr <span class="classifier-delimiter">:</span> <span class="classifier">object</span></dt>
+<dd>This object is like an <code>ndarray</code>, but behaves differently when subsetting with a <code>str</code>.</dd>
+</dl>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="c1"># let's create a regular numpy ndarray:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">indgen</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([[</span><span class="mi">9</span><span class="p">]])</span>
+
+<span class="c1"># transform b:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">subsetify_</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="c1"># b behaves like a regular numpy ndarray:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([[</span><span class="mi">9</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="mf">9.5</span>
+
+<span class="c1"># but when subsetting with a ``str``, it behaves like IDL's subset:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">"2:3, 1:2"</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">],</span>
+      <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">"*"</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>
+       <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">])</span>
+
+<span class="c1"># it also works for setting elements:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">"1:2,1:3"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">7</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">8</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">12</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.subset_" data-toc="subset_">
+    <span class="ident">subset_</span>(arr, subset, debug=False)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Get a subset of an array.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>arr <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>The input array.</dd>
+<dt>subset <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Subset as it would have been passed to IDL, as string. See examples.</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>res <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>In IDL, subset ranges are inclusive: <code>[1:3]</code> returns 3 elements, while it would only return 2
+elements in python.</p>
+<p><code>idlwrap.subsetify_</code> provides an alternative interface to the same functionality.</p>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">indgen</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">subset_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">subset_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"[14]"</span><span class="p">)</span>
+<span class="mi">14</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">subset_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"[1:2]"</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">subset_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"[1:2,2:3]"</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">]])</span>
+</pre></div>
+<p>These are not yet implemented:</p>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="c1"># idlwrap.subset_(a, "[-1]")   # negative subset</span>
+<span class="c1"># idlwrap.subset_(a, "[1.5]")  # float-type subset</span>
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.set_subset_" data-toc="set_subset_">
+    <span class="ident">set_subset_</span>(arr, subset, what)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Assign an array subset to a value. The <code>arr</code> is modified in place. An alternative interface to
+the same functionalities is provided by the <code>idlwrap.subsetify_</code> function.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>arr <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>The array to use.</dd>
+<dt>subset <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>A string with the subset notation, as you would use it in IDL, e.g. <code><span class="pre">"[1:4,*]"</span></code>. You can
+also omit the brackets <code>[]</code>.</dd>
+<dt>what <span class="classifier-delimiter">:</span> <span class="classifier">ndarray, numeric</span></dt>
+<dd>The value(s) to assign to the selected subset.</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>None</dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="python"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">idlwrap</span><span class="o">.</span><span class="n">indgen</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">idlwrap</span><span class="o">.</span><span class="n">set_subset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"[1:4]"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">idlwrap</span><span class="o">.</span><span class="n">set_subset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"*"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">idlwrap</span><span class="o">.</span><span class="n">set_subset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">"2:5,2:5"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># the following are valid IDL, but are not yet implemented in idlwrap:</span>
+
+<span class="c1"># idlwrap.set_subset(a, "[1.5]", 0)  # float-type subset</span>
+<span class="c1"># idlwrap.set_subset(a, "-1", 0)     # negative subset</span>
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.matrix_multiply_" data-toc="matrix_multiply_">
+    <span class="ident">matrix_multiply_</span>(a, b, atranspose=False, btranspose=False)
+    </h3>
+    
+
+    
+  
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.H" data-toc="H">
+    <span class="ident">H</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>matrix multiplication ("hash"), corresponds to IDL <code>A # B</code></p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>a <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>supported shapes: (n,) or (n,m)</dd>
+<dt>b <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>supported shapes: (n,) or (n,m)</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>mat <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>Multiplication of the arrays, as defined by the IDL documentation.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><strong>porting to python</strong></p>
+<p>Quite complicated, as the numpy function depends on the dimensions of the inputs. Look at the
+source code.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.HH" data-toc="HH">
+    <span class="ident">HH</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>matrix multiplication, corresponds to IDL <code>A ## B</code></p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>a <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>supported shapes: (n,) or (n,m)</dd>
+<dt>b <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>supported shapes: (n,) or (n,m)</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>mat <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd>Multiplication of the arrays, as defined by the IDL documentation.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p><strong>porting to python</strong></p>
+<p>Quite complicated, as the numpy function depends on the dimensions of the inputs. Look at the
+source code.</p>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.LE" data-toc="LE">
+    <span class="ident">LE</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>less-than-or-equal-to relational operator, corresponds to IDL <code>a LE b</code></p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.GE" data-toc="GE">
+    <span class="ident">GE</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>greater-than-or-equal-to relational operator, corresponds to IDL <code>a GE b</code></p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.LT" data-toc="LT">
+    <span class="ident">LT</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>less-than relational operator, corresponds to IDL <code>a LT b</code></p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.GT" data-toc="GT">
+    <span class="ident">GT</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>greater-than relational operator, corresponds to IDL <code>a GT b</code></p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.EQ" data-toc="EQ">
+    <span class="ident">EQ</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>equals-to relational operator, corresponds to IDL <code>a EQ b</code></p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.NE" data-toc="NE">
+    <span class="ident">NE</span>(a, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>not-equal-to relational operator, corresponds to IDL <code>a NE b</code></p>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <h3 class="name def" id="idlwrap.operator_" data-toc="operator_">
+    <span class="ident">operator_</span>(a, operator, b)
+    </h3>
+    
+
+    
+  
+    <div class="desc">
+
+
+<p>Special IDL operations.</p>
+<div class="section" id="parameters">
+<h5>Parameters</h5>
+<dl class="docutils">
+<dt>a <span class="classifier-delimiter">:</span> <span class="classifier">numeric or ndarray</span></dt>
+<dd><!--  -->
+</dd>
+<dt>operator <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first">Operation. The following IDL operations are supported:</p>
+<ul class="last simple">
+<li><dl class="first docutils">
+<dt><a class="reference external" href="http://www.harrisgeospatial.com/docs/Minimum_and_Maximum_Oper.html">minimum and maximum operators</a>:</dt>
+<dd><ul class="first last">
+<li><code>'</code>: minimum operator</li>
+<li><code>'&gt;'</code>: maximum operator</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="http://www.harrisgeospatial.com/docs/Relational_Operators.html">relational operators</a>:</dt>
+<dd><ul class="first last">
+<li><code>'EQ'</code>: equal to</li>
+<li><code>'NE'</code>: not equal to</li>
+<li><code>'GE'</code>: greater than or equal to</li>
+<li><code>'GT'</code>: greater than</li>
+<li><code>'LE'</code>: less than or equal to</li>
+<li><code>'LT'</code>: less than</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="http://www.harrisgeospatial.com/docs/Matrix_Operators.html">matrix operators</a>:</dt>
+<dd><ul class="first last">
+<li><code>'#'</code>: multiplies columns of <code>a</code> with rows of <code>b</code>. <code>b</code> must have the same
+number of columns as <code>a</code> has rows. The resulting array has the same number of
+columns as <code>a</code> and the same number of rows as <code>b</code>.</li>
+<li><code><span class="pre">'##'</span></code>: multiplies rows of <code>a</code> with columns of <code>b</code>. <code>b</code> must have the same
+number of rows as <code>a</code> has columns. The resulting array has the same number of rows
+as <code>a</code> and the same number of columns as <code>b</code>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="returns">
+<h5>Returns</h5>
+<dl class="docutils">
+<dt>res <span class="classifier-delimiter">:</span> <span class="classifier">numeric / ndarray</span></dt>
+<dd><!--  -->
+</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<h5>Notes</h5>
+<p>In idlwrap, the relational operators (<code>EQ</code>, <code>NE</code>, <code>GE</code>, <code>GT</code>, <code>LE</code>, <code>LE</code>) are also
+available as functions: <code>EQ(a, b)</code>, ...</p>
+<p><strong>Porting to python</strong></p>
+<ul class="simple">
+<li>the relational operators can be replaced with its python equivalent</li>
+<li>the minimum and maximum operators <code>&lt;</code> and <code>&gt;</code> can be replaced with <code>np.minimum(a,b)</code> and
+<code>np.maximum(a,b)</code>, respectively <code>a &lt; b</code></li>
+<li>the matrix operators are more complex. Please refer to the documentation of <code>H</code> and
+<code>HH</code></li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h5>Examples</h5>
+<div class="highlight highlight-with-lang" data-lang="IDL"><pre><span></span>A <span class="o">&lt;</span> B   <span class="o">-&gt;</span>  operator_(a, <span class="s2">"&lt;"</span>, b)
+        <span class="o">-&gt;</span>  np.minimum(a, b)
+
+A <span class="k">LE</span> B  <span class="o">-&gt;</span>  operator_(a, <span class="s2">"LE"</span>, b)
+        <span class="o">-&gt;</span>  <span class="k">LE</span>(a, b)
+        <span class="o">-&gt;</span>  a <span class="o">&lt;=</span> b
+
+A <span class="o">#</span> B   <span class="o">-&gt;</span>  operator_(a, <span class="s2">"#"</span>, b)
+        <span class="o">-&gt;</span>  H(a, b)
+
+A <span class="o">##</span> B  <span class="o">-&gt;</span>  operator_(a, <span class="s2">"##"</span>, b)
+        <span class="o">-&gt;</span>  HH(a, b)
+</pre></div>
+</div>
+</div>
+  <div class="source_cont">
+</div>
+
+  </div>
+  
+
+
+  </section>
+
+    </article></div></div></div>
+
+        <footer>
+            built with <a href="https://github.com/r4lv/jpy-flette">jpy-flette</a>
+        </footer>
+    </div>
+
+
+
+    <a href="https://github.com/r4lv/idlwrap"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <script src="static/script.js"></script>
+
+</body>
+</html>
