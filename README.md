@@ -68,4 +68,4 @@ array([[4, 5],
 ```
 
 
-> Make sure you check the `documentation <https://r4lv.github.io/idlwrap>`_, which is filled with many examples on how to use *idlwrap*, but also provides general information on how to port existing IDL code to python!
+*idlwrap* provides many more functions. Make sure you check the [documentation](https://r4lv.github.io/idlwrap), which is filled with many examples on how to use *idlwrap*, but also provides general information on how to port existing IDL code to python!
