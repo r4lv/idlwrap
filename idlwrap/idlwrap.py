@@ -312,9 +312,9 @@ def size(arr):
             "complex floating": 6,
                 "COMPLEX": 6,
             "string": 7,
-                "STRING": 7
+                "STRING": 7,
             "structure": 8,
-                "STRUCT": 8.
+                "STRUCT": 8,
             "double-precision complex": 9,
                 "DCOMPLEX": 9,
             "pointer": 10,
