@@ -989,6 +989,11 @@ def range_(init, limit, increment=1):
     """
     Behaves like IDL's ``FOR i=init, limit DO statement``.
 
+    Parameters
+    ----------
+    init : int, float
+    limit : int, float
+
 
     Notes
     -----
@@ -1023,7 +1028,7 @@ def range_(init, limit, increment=1):
 
 def range_int_(*args):
     """
-    ?
+    Like ``range_``, but returns integers which could then be used as list indices.
     """
     return range_(*args).astype(int)
 
@@ -1137,13 +1142,6 @@ def subsetify_(arr):
                [16, 17, 18, 19]])
 
 
-
-
-
-
-    
-
-
     """
     return _IDLarray(arr)
 
@@ -1169,6 +1167,56 @@ class _IDLarray:
 
 
 def subset_(arr, subset, debug=False):
+    """
+    Get a subset of an array.
+
+    Parameters
+    ----------
+    arr : ndarray
+        The input array.
+    subset : str
+        Subset as it would have been passed to IDL, as string. See examples.
+
+    Returns
+    -------
+    res : ndarray
+
+
+    Notes
+    -----
+    In IDL, subset ranges are inclusive: ``[1:3]`` returns 3 elements, while it would only return 2
+    elements in python.
+
+    ``idlwrap.subsetify_`` provides an alternative interface to the same functionality.
+
+    Examples
+    --------
+
+    .. code:: python
+
+        >>> a = idlwrap.indgen(4, 4)
+        >>> idlwrap.subset_(a, "*")
+        array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15])
+
+        >>> idlwrap.subset_(a, "[14]")
+        14
+
+        >>> idlwrap.subset_(a, "[1:2]")
+        array([1, 2])
+
+        >>> idlwrap.subset_(a, "[1:2,2:3]")
+        array([[ 9, 10],
+               [13, 14]])
+
+    These are not yet implemented:
+
+    .. code:: python
+
+        # idlwrap.subset_(a, "[-1]")   # negative subset
+        # idlwrap.subset_(a, "[1.5]")  # float-type subset
+
+
+    """
     parts = _transform_subset(subset, debug=debug)
     if len(parts)==1:
         return arr.flatten()[parts[0]]
@@ -1176,6 +1224,42 @@ def subset_(arr, subset, debug=False):
         return arr.__getitem__(parts)
 
 def set_subset_(arr, subset, what):
+    """
+    Assign an array subset to a value. The ``arr`` is modified in place. An alternative interface to
+    the same functionalities is provided by the ``idlwrap.subsetify_`` function.
+
+    Parameters
+    ----------
+    arr : ndarray
+        The array to use.
+    subset : str
+        A string with the subset notation, as you would use it in IDL, e.g. ``"[1:4,*]"``. You can
+        also omit the brackets ``[]``.
+    what : ndarray, numeric
+        The value(s) to assign to the selected subset.
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+
+    .. code:: python
+
+        a = idlwrap.indgen(10, 10)
+
+        idlwrap.set_subset(a, "[1:4]", 0)
+        idlwrap.set_subset(a, "*", 0)
+        idlwrap.set_subset(a, "2:5,2:5", 0)
+
+        # the following are valid IDL, but are not yet implemented in idlwrap:
+
+        # idlwrap.set_subset(a, "[1.5]", 0)  # float-type subset
+        # idlwrap.set_subset(a, "-1", 0)     # negative subset
+
+
+    """
     parts = _transform_subset(subset)
     if len(parts)==1:
         raise NotImplementedError("single-element setting not implemented!")
