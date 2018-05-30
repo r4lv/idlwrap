@@ -953,6 +953,60 @@ def beselj(x, n):
 
 
 
+
+#                  888    d8b          888
+#       o          888    Y8P          888
+#      d8b         888                 888
+#     d888b        888888 888  .d8888b 888888  .d88b.   .d8888b
+# "Y888888888P"    888    888 d88P"    888    d88""88b d88P"
+#   "Y88888P"      888    888 888      888    888  888 888
+#   d88P"Y88b      Y88b.  888 Y88b.    Y88b.  Y88..88P Y88b.
+#  dP"     "Yb      "Y888 888  "Y8888P  "Y888  "Y88P"   "Y8888P
+
+
+
+def tic(name=None):
+    """
+
+    Returns
+    -------
+    clock_name : str or None
+        The parameter which was passed as ``name``. Pass it, or the ``name``
+        directly, to ``toc()`` to get the timing for that particular call to
+        ``tic``.
+
+    Notes
+    -----
+
+    - The ``/PROFILER`` keyword is not implemented.
+    - http://www.harrisgeospatial.com/docs/TIC.html
+
+    """
+    import timeit
+    if not hasattr(tic, "start"):
+        tic.start = {}
+    tic.start[name] = timeit.default_timer()
+
+    return name
+
+
+
+
+def toc(name=None):
+    import timeit
+    stop = timeit.default_timer()
+
+    if not hasattr(tic, "start") or name not in tic.start:
+        name_param = repr(name) if name is not None else ""
+        raise RuntimeError('no tic({}) was called!'.format(name_param))
+    seconds = stop - tic.start[name]
+    del tic.start[name]
+    pretty_name = "" if name is None else " "+name
+    print("Time elapsed {}: {:.6g} seconds.".format(name, seconds))
+
+
+
+
 #                                  888      888
 #       o                          888      888
 #      d8b                         888      888
