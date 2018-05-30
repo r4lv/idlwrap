@@ -9,6 +9,7 @@ name = "pypi"
 
 numpy = "*"
 scipy = "*"
+"e1839a8" = {path = ".", editable = true}
 
 
 [dev-packages]
